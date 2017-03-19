@@ -139,9 +139,14 @@ namespace llamaPorts
             }
             else
             {
-                byte[] a = new byte[32];
+                byte[] a = new byte[port.BytesToRead];
                 port.Read(a, 0, a.Length);
-
+                int read = 0; 
+                while (read < rbyte) 
+                { 
+                    int length = port.Read(a, read, a.Length - read); 
+                    read += length; 
+                } 
                 return System.Text.Encoding.ASCII.GetString(a).Decode(Command[src].receive);
             }
         }
